@@ -49,6 +49,12 @@
       transition: transform 0.5s ease;
       line-height: 1.2;
       word-break: break-word;
+      display: inline-block;
+      height: 80px; /* ここで高さを固定（必要に応じて調整） */
+      overflow: hidden;
+      vertical-align: top;
+      word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     .menu-display .subtext {
@@ -59,7 +65,9 @@
 
     .enlarged {
       transform: scale(1.5);
+      transform-origin: center center;
     }
+
 
     table {
       width: 100%;
@@ -173,8 +181,9 @@
   </style>
 </head>
 <body>
+  テスト
   <img src="img/saizeriya.webp" alt="サイゼリヤ" class="top-image" />
-  <h1>オジゼリヤルーレット</h1>
+  <h1>サイゼリヤルーレット</h1>
   <button onclick="startFoodRoulette()">フード</button>
   <button onclick="startDrinkRoulette()">ドリンク</button>
   <div id="rouletteResult" class="menu-display">？？？？？？？？？？</div>
