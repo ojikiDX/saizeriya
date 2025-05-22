@@ -13,7 +13,7 @@
       background-color: #31a046;
       color: #ffffff;
     }
-
+    
     h1 { font-size: 24px; }
     h2 { margin-top: 200px; font-size: 22px; }
 
@@ -156,8 +156,8 @@
   transition: background-color 0.3s;
 }
 
-.add-form button:hover {
-  background-color: #278a3b;
+.helptext {
+  margin-top: 200px;
 }
 
 
@@ -169,6 +169,10 @@
       button { font-size: 14px; padding: 8px 16px; }
       table { font-size: 14px; }
     }
+
+  .helptext {
+  color: #ffffff
+  }
   </style>
 </head>
 <body>
@@ -226,6 +230,12 @@
   <h2>ルーレット履歴</h2>
   <div id="history" style="max-width:600px; margin: 0 auto; text-align:left; background:#fff; color:#000; border-radius:8px; padding:10px 20px; overflow-y:auto; max-height: 200px;">
     履歴はまだありません。
+  </div>
+  <div class="helptext">
+  毎回抽選する等倍のルーレットです。<br>
+  左側の緑のチェックボックスは、オンオフでルーレットに入れるか入れないかを選択できます。<br>
+  メニューを追加は、万が一配信上で「このメニュールーレットに入ってないな」などがあったら使って下さい。<br>
+  あと、ページを更新するとチェックボックス、追加したメニュー、履歴はリセットされます。<br>
   </div>
   <script>
     const foods = [
