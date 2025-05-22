@@ -99,83 +99,67 @@
       cursor: pointer;
     }
 
-    .add-form h2 {
-      font-size: 20px;
-      margin-bottom: 16px;
-      margin-top: 0;
-    }
+.add-form h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
 
-    .add-form label {
-      display: block;
-      margin-bottom: 4px;
-      font-weight: 600;
-      font-size: 14px;
-    }
+.add-form label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+  font-size: 14px;
+}
 
-    .add-form {
-      margin-top: 40px;
-      text-align: left;
-      background-color: #ffffff;
-      color: #000;
-      padding: 20px 30px;
-      border-radius: 12px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      box-sizing: border-box;
-    }
+.add-form {
+  margin-top: 40px;
+  text-align: left;
+  background-color: #ffffff;
+  color: #000;
+  padding: 20px 30px; /* 左右に余白を広げる */
+  border-radius: 12px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
 
-    .add-form input[type="text"],
-    .add-form input[type="number"] {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
+.add-form input[type="text"],
+.add-form input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box; /* パディングを含めてサイズ調整 */
+}
 
-    .add-form select {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
+.add-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
 
-    .add-form button {
-      background-color: #31a046;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-size: 14px;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      transition: background-color 0.3s;
-    }
+.add-form button {
+  background-color: #31a046;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
 
-    .add-form button:hover {
-      background-color: #278a3b;
-    }
+.add-form button:hover {
+  background-color: #278a3b;
+}
 
-    #history {
-      margin-top: 30px;
-      background: #fff;
-      color: #000;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      border-radius: 12px;
-      padding: 15px 20px;
-      text-align: left;
-      font-size: 14px;
-      box-sizing: border-box;
-      max-height: 300px;
-      overflow-y: auto;
-      user-select: text;
-    }
 
     @media (max-width: 600px) {
       h1 { font-size: 20px; }
@@ -194,7 +178,6 @@
   <button onclick="startFoodRoulette()">フード</button>
   <button onclick="startDrinkRoulette()">ドリンク</button>
   <div id="rouletteResult" class="menu-display">？？？？？？？？？？</div>
-
   <h2>フードメニュー</h2>
   <div class="table-wrapper">
     <table id="foodTable">
@@ -240,13 +223,12 @@
       <button type="submit">追加</button>
     </form>
   </div>
-
-  <h2>履歴</h2>
-  <div id="history">履歴はまだありません。</div>
-
+  <h2>ルーレット履歴</h2>
+  <div id="history" style="max-width:600px; margin: 0 auto; text-align:left; background:#fff; color:#000; border-radius:8px; padding:10px 20px; overflow-y:auto; max-height: 200px;">
+    履歴はまだありません。
+  </div>
   <script>
-    // localStorageからデータ復元、なければ初期値
-    let foods = JSON.parse(localStorage.getItem('foods')) || [
+    const foods = [
       { name:'ミラノ風ドリア', code:'2101', price:300 },
       { name:'小エビのサラダ', code:'1202', price:350 },
       { name:'辛味チキン', code:'1401', price:300 },
@@ -273,7 +255,7 @@
       { name:'冷たいパンプキンスープ', code:'SU03', price:150 }
     ];
 
-    let drinks = JSON.parse(localStorage.getItem('drinks')) || [
+    const drinks = [
       { name:'コーヒー', code:'D01' }, { name:'カプチーノ', code:'D02' },
       { name:'エスプレッソ', code:'D03' }, { name:'アメリカン', code:'D04' },
       { name:'アイスコーヒー', code:'D05' }, { name:'アイスカプチーノ', code:'D06' },
@@ -287,21 +269,9 @@
       { name:'烏龍茶', code:'D21' }, { name:'紅茶花伝アイスティー', code:'D22' }
     ];
 
-    let foodCheckStates = JSON.parse(localStorage.getItem('foodCheckStates')) || {};
-    let drinkCheckStates = JSON.parse(localStorage.getItem('drinkCheckStates')) || {};
+    const foodCheckStates = {};
+    const drinkCheckStates = {};
 
-    let history = JSON.parse(localStorage.getItem('history')) || [];
-
-    // 保存関数
-    function saveAllToStorage() {
-      localStorage.setItem('foods', JSON.stringify(foods));
-      localStorage.setItem('drinks', JSON.stringify(drinks));
-      localStorage.setItem('foodCheckStates', JSON.stringify(foodCheckStates));
-      localStorage.setItem('drinkCheckStates', JSON.stringify(drinkCheckStates));
-      localStorage.setItem('history', JSON.stringify(history));
-    }
-
-    // テーブル表示更新
     function populateTables() {
       const foodBody = document.getElementById('foodBody');
       const drinkBody = document.getElementById('drinkBody');
@@ -309,13 +279,10 @@
       drinkBody.innerHTML = '';
 
       foods.forEach((item, i) => {
-        if (foodCheckStates[i] === undefined) foodCheckStates[i] = true;
+        foodCheckStates[i] = true;
         foodBody.insertAdjacentHTML('beforeend', `
           <tr>
-            <td class="checkbox-cell">
-              <input type="checkbox" class="custom-checkbox" ${foodCheckStates[i] ? 'checked' : ''} 
-                     onchange="foodCheckStates[${i}] = this.checked; saveAllToStorage()" />
-            </td>
+            <td class="checkbox-cell"><input type="checkbox" class="custom-checkbox" checked onchange="foodCheckStates[${i}] = this.checked" /></td>
             <td>${item.name}</td>
             <td>${item.code}</td>
             <td>￥${item.price ?? '-'}</td>
@@ -323,40 +290,16 @@
       });
 
       drinks.forEach((item, i) => {
-        if (drinkCheckStates[i] === undefined) drinkCheckStates[i] = true;
+        drinkCheckStates[i] = true;
         drinkBody.insertAdjacentHTML('beforeend', `
           <tr>
-            <td class="checkbox-cell">
-              <input type="checkbox" class="custom-checkbox" ${drinkCheckStates[i] ? 'checked' : ''} 
-                     onchange="drinkCheckStates[${i}] = this.checked; saveAllToStorage()" />
-            </td>
+            <td class="checkbox-cell"><input type="checkbox" class="custom-checkbox" checked onchange="drinkCheckStates[${i}] = this.checked" /></td>
             <td>${item.name}</td>
             <td>${item.code}</td>
           </tr>`);
       });
-
-      saveAllToStorage();
     }
 
-    // 履歴表示
-    function updateHistoryDisplay() {
-      const historyDiv = document.getElementById('history');
-      if (history.length === 0) {
-        historyDiv.textContent = '履歴はまだありません。';
-        return;
-      }
-      const recent = history.slice(-20).reverse();
-
-      historyDiv.innerHTML = recent.map(item => {
-        if (item.type === 'food') {
-          return `<div>【フード】${item.name} (${item.code}) ￥${item.price ?? '-'}</div>`;
-        } else {
-          return `<div>【ドリンク】${item.name} (${item.code})</div>`;
-        }
-      }).join('');
-    }
-
-    // ルーレット本体
     function startRoulette(items, isFood = true) {
       const checkStates = isFood ? foodCheckStates : drinkCheckStates;
       const validItems = items.filter((_, i) => checkStates[i]);
@@ -372,59 +315,85 @@
           : `<div>${item.name}</div><div class="subtext">${item.code}</div>`;
         if (++count > 40) {
           clearInterval(interval);
-          history.push({
-            type: isFood ? 'food' : 'drink',
-            name: item.name,
-            code: item.code,
-            price: item.price ?? null
-          });
-          saveAllToStorage();
-          updateHistoryDisplay();
-
           setTimeout(() => display.classList.add('enlarged'), 100);
         }
       }, 50);
     }
 
-    // フードルーレット起動
-    function startFoodRoulette() {
-      startRoulette(foods, true);
-    }
+    const startFoodRoulette  = () => startRoulette(foods, true);
+    const startDrinkRoulette = () => startRoulette(drinks, false);
 
-    // ドリンクルーレット起動
-    function startDrinkRoulette() {
-      startRoulette(drinks, false);
-    }
-
-    // メニュー追加フォーム
     function addCustomMenu() {
       const type = document.getElementById('menuType').value;
       const name = document.getElementById('menuName').value.trim();
       const code = document.getElementById('menuCode').value.trim();
-      const priceInput = document.getElementById('menuPrice').value;
-      const price = priceInput === '' ? null : parseInt(priceInput);
+      const price = parseInt(document.getElementById('menuPrice').value);
 
-      if (!name && !code && (price === null || isNaN(price))) {
-        alert('名前か注文番号か価格のどれかを入力してください');
-        return false;
-      }
+      if (!name && !code && isNaN(price)) return false;
 
       if (type === 'food') {
-        foods.push({ name: name || '（名称未定）', code: code || '---', price: price ?? '-' });
+        const item = { name: name || '（名称未定）', code: code || '---', price: isNaN(price) ? '-' : price };
+        foods.push(item);
       } else {
-        drinks.push({ name: name || '（名称未定）', code: code || '---' });
+        const item = { name: name || '（名称未定）', code: code || '---' };
+        drinks.push(item);
       }
 
       populateTables();
-      saveAllToStorage();
       document.querySelector('.add-form form').reset();
       return false;
     }
+    // ルーレットで選ばれた結果を履歴に保存＆表示する配列
+const history = [];
 
-    window.onload = () => {
-      populateTables();
+function updateHistoryDisplay() {
+  const historyDiv = document.getElementById('history');
+  if (history.length === 0) {
+    historyDiv.textContent = '履歴はまだありません。';
+    return;
+  }
+  // 最新20件表示（適宜変更可）
+  const recent = history.slice(-20).reverse();
+
+  historyDiv.innerHTML = recent.map(item => {
+    if (item.type === 'food') {
+      return `<div>【フード】${item.name} (${item.code}) ￥${item.price ?? '-'}</div>`;
+    } else {
+      return `<div>【ドリンク】${item.name} (${item.code})</div>`;
+    }
+  }).join('');
+}
+
+function startRoulette(items, isFood = true) {
+  const checkStates = isFood ? foodCheckStates : drinkCheckStates;
+  const validItems = items.filter((_, i) => checkStates[i]);
+  if (validItems.length === 0) return alert('選択されたメニューがありません');
+
+  const display = document.getElementById('rouletteResult');
+  display.classList.remove('enlarged');
+  let count = 0;
+  const interval = setInterval(() => {
+    const item = validItems[Math.floor(Math.random() * validItems.length)];
+    display.innerHTML = isFood
+      ? `<div>${item.name}</div><div class="subtext">${item.code} ￥${item.price ?? '-'}</div>`
+      : `<div>${item.name}</div><div class="subtext">${item.code}</div>`;
+    if (++count > 40) {
+      clearInterval(interval);
+      // 履歴に追加
+      history.push({
+        type: isFood ? 'food' : 'drink',
+        name: item.name,
+        code: item.code,
+        price: item.price ?? null
+      });
       updateHistoryDisplay();
-    };
+
+      setTimeout(() => display.classList.add('enlarged'), 100);
+    }
+  }, 50);
+}
+
+    window.onload = populateTables;
   </script>
 </body>
 </html>
