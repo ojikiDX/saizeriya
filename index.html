@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>サイゼリヤメニュールーレット</title>
-  <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@800&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Kaisei Tokumin', serif;
@@ -23,14 +23,24 @@
       cursor: pointer;
       background-color: #c6221f;
       color: #ffffff;
-      border: none; border-radius: 4px;
+      border: none;
+      border-radius: 4px;
     }
     .menu-display {
       font-size: 20px;
       margin-top: 20px;
       transition: transform 0.5s ease;
+      /* 2行表示の調整 */
+      line-height: 1.2;
     }
-    .enlarged { transform: scale(1.5); }
+    .menu-display .subtext {
+      font-size: 0.8em;
+      line-height: 1;
+      margin: 0;
+    }
+    .enlarged {
+      transform: scale(1.5);
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -39,9 +49,18 @@
       font-size: 16px;
       margin: 10px 0;
     }
-    th, td { border: 1px solid #999; padding: 8px; }
-    th { background-color: #c6221f; color: white; }
-    .table-wrapper { overflow-x: auto; margin-top: 10px; }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+    }
+    th {
+      background-color: #c6221f;
+      color: white;
+    }
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
     @media (max-width: 600px) {
       h1 { font-size: 20px; }
       h2 { font-size: 18px; }
@@ -56,8 +75,8 @@
   <h1>オジゼリヤルーレット</h1>
   <button onclick="startFoodRoulette()">FOOD</button>
   <button onclick="startDrinkRoulette()">DRINK</button>
-  <div id="foodMenu"   class="menu-display">？？？？？？？？？？</div>
-  <div id="drinkMenu"  class="menu-display">？？？？？？？？？？</div>
+  <div id="foodMenu" class="menu-display">ここにフードメニューが表示されます</div>
+  <div id="drinkMenu" class="menu-display">ここにドリンクメニューが表示されます</div>
 
   <h2>フードメニュー</h2>
   <div class="table-wrapper">
@@ -69,7 +88,7 @@
   <h2>ドリンクメニュー</h2>
   <div class="table-wrapper">
     <table id="drinkTable">
-      <tr><th>メニュー名</th><th>注文番号</th></tr>
+      <tr><th>メニュー名</th><th>注文番号</th></tr><!-- 価格列を削除 -->
     </table>
   </div>
 
@@ -77,7 +96,7 @@
     /* ---------- データ ---------- */
     const foods = [
       { name:'ミラノ風ドリア', code:'2101', price:300 }, { name:'小エビのサラダ', code:'1202', price:350 },
-      { name:'辛味チキン', code:'1401', price:300 },   { name:'バッファローモッツァレラのマルゲリータピザ', code:'2203', price:400 },
+      { name:'辛味チキン', code:'1401', price:300 }, { name:'バッファローモッツァレラのマルゲリータピザ', code:'2203', price:400 },
       { name:'若鶏のディアボラ風', code:'2402', price:500 }, { name:'たまねぎのズッパ', code:'1307', price:300 },
       { name:'タラコソースシシリー風', code:'2304', price:400 }, { name:'ハンバーグステーキ', code:'2401', price:500 },
       { name:'イタリアンプリン', code:'2602', price:300 }, { name:'エスカルゴのオーブン焼き', code:'1405', price:400 },
@@ -108,11 +127,10 @@
       let count = 0;
       const interval = setInterval(() => {
         const item = items[Math.floor(Math.random() * items.length)];
-        // 飲み物は価格を表示しない
         const showPrice = (displayId !== 'drinkMenu');
-        display.textContent = showPrice
-          ? `${item.name} ${item.code} ￥${item.price}`
-          : `${item.name} ${item.code}`;
+        display.innerHTML = showPrice
+          ? `<div>${item.name}</div><div class="subtext">${item.code} ￥${item.price}</div>`
+          : `<div>${item.name}</div><div class="subtext">${item.code}</div>`;
         if (++count > 40) {
           clearInterval(interval);
           setTimeout(() => display.classList.add('enlarged'), 100);
@@ -132,7 +150,7 @@
       });
       drinks.forEach(item => {
         drinkTable.insertAdjacentHTML('beforeend',
-          `<tr><td>${item.name}</td><td>${item.code}</td></tr>`);  // 価格セルを置かない
+          `<tr><td>${item.name}</td><td>${item.code}</td></tr>`);
       });
     }
     window.onload = populateTables;
