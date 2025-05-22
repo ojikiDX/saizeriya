@@ -178,7 +178,10 @@
   <button onclick="startFoodRoulette()">フード</button>
   <button onclick="startDrinkRoulette()">ドリンク</button>
   <div id="rouletteResult" class="menu-display">？？？？？？？？？？</div>
-
+  <h2>ルーレット履歴</h2>
+  <div id="history" style="max-width:600px; margin: 0 auto; text-align:left; background:#fff; color:#000; border-radius:8px; padding:10px 20px; overflow-y:auto; max-height: 200px;">
+    履歴はまだありません。
+  </div>
   <h2>フードメニュー</h2>
   <div class="table-wrapper">
     <table id="foodTable">
@@ -341,6 +344,55 @@
       document.querySelector('.add-form form').reset();
       return false;
     }
+    // ルーレットで選ばれた結果を履歴に保存＆表示する配列
+const history = [];
+
+function updateHistoryDisplay() {
+  const historyDiv = document.getElementById('history');
+  if (history.length === 0) {
+    historyDiv.textContent = '履歴はまだありません。';
+    return;
+  }
+  // 最新20件表示（適宜変更可）
+  const recent = history.slice(-20).reverse();
+
+  historyDiv.innerHTML = recent.map(item => {
+    if (item.type === 'food') {
+      return `<div>【フード】${item.name} (${item.code}) ￥${item.price ?? '-'}</div>`;
+    } else {
+      return `<div>【ドリンク】${item.name} (${item.code})</div>`;
+    }
+  }).join('');
+}
+
+function startRoulette(items, isFood = true) {
+  const checkStates = isFood ? foodCheckStates : drinkCheckStates;
+  const validItems = items.filter((_, i) => checkStates[i]);
+  if (validItems.length === 0) return alert('選択されたメニューがありません');
+
+  const display = document.getElementById('rouletteResult');
+  display.classList.remove('enlarged');
+  let count = 0;
+  const interval = setInterval(() => {
+    const item = validItems[Math.floor(Math.random() * validItems.length)];
+    display.innerHTML = isFood
+      ? `<div>${item.name}</div><div class="subtext">${item.code} ￥${item.price ?? '-'}</div>`
+      : `<div>${item.name}</div><div class="subtext">${item.code}</div>`;
+    if (++count > 40) {
+      clearInterval(interval);
+      // 履歴に追加
+      history.push({
+        type: isFood ? 'food' : 'drink',
+        name: item.name,
+        code: item.code,
+        price: item.price ?? null
+      });
+      updateHistoryDisplay();
+
+      setTimeout(() => display.classList.add('enlarged'), 100);
+    }
+  }, 50);
+}
 
     window.onload = populateTables;
   </script>
