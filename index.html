@@ -99,17 +99,6 @@
       cursor: pointer;
     }
 
-    .add-form {
-  margin: 30px auto 20px auto; /* 上下の余白縮小 */
-  text-align: left;
-  background-color: #ffffff;
-  color: #000;
-  padding: 16px 20px;
-  border-radius: 12px;
-  max-width: 500px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* カード風に */
-}
-
 .add-form h2 {
   font-size: 20px;
   margin-bottom: 16px;
@@ -123,8 +112,29 @@
   font-size: 14px;
 }
 
+.add-form {
+  margin-top: 40px;
+  text-align: left;
+  background-color: #ffffff;
+  color: #000;
+  padding: 20px 30px; /* 左右に余白を広げる */
+  border-radius: 12px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
 .add-form input[type="text"],
-.add-form input[type="number"],
+.add-form input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box; /* パディングを含めてサイズ調整 */
+}
+
 .add-form select {
   width: 100%;
   padding: 8px;
