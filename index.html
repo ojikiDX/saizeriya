@@ -6,15 +6,6 @@
   <title>サイゼリヤメニュールーレット</title>
   <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@800&display=swap" rel="stylesheet" />
   <style>
-    .top-image {
-      width: 100%;
-      max-width: 900px;
-      height: auto;
-      display: block;
-      margin: 0 auto 20px auto;
-      border-radius: 8px;
-    }
-
     body {
       font-family: 'Kaisei Tokumin', serif;
       text-align: center;
@@ -35,7 +26,21 @@
       background-color: #c6221f;
       color: #ffffff;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #a51c1a;
+    }
+
+    .top-image {
+      width: 100%;
+      max-width: 900px;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px auto;
+      border-radius: 8px;
     }
 
     .menu-display {
@@ -63,11 +68,14 @@
       color: #000000;
       font-size: 16px;
       margin: 10px 0;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     th, td {
       border: 1px solid #999;
       padding: 8px;
+      vertical-align: middle;
     }
 
     th {
@@ -78,6 +86,17 @@
     .table-wrapper {
       overflow-x: auto;
       margin-top: 10px;
+    }
+
+    .checkbox-cell {
+      text-align: center;
+    }
+
+    .custom-checkbox {
+      width: 20px;
+      height: 20px;
+      accent-color: #31a046;
+      cursor: pointer;
     }
 
     @media (max-width: 600px) {
@@ -91,7 +110,6 @@
   </style>
 </head>
 <body>
-  メニュー確認中です．．．
   <img src="img/saizeriya.webp" alt="サイゼリヤ" class="top-image" />
   <h1>オジゼリヤルーレット</h1>
   <button onclick="startFoodRoulette()">FOOD</button>
@@ -101,55 +119,110 @@
   <h2>フードメニュー</h2>
   <div class="table-wrapper">
     <table id="foodTable">
-      <tr><th>メニュー名</th><th>注文番号</th><th>価格</th></tr>
+      <thead>
+        <tr>
+          <th></th><th>メニュー名</th><th>注文番号</th><th>価格</th>
+        </tr>
+      </thead>
+      <tbody id="foodBody"></tbody>
     </table>
   </div>
 
   <h2>ドリンクメニュー</h2>
   <div class="table-wrapper">
     <table id="drinkTable">
-      <tr><th>メニュー名</th><th>注文番号</th></tr>
+      <thead>
+        <tr>
+          <th></th><th>メニュー名</th><th>注文番号</th>
+        </tr>
+      </thead>
+      <tbody id="drinkBody"></tbody>
     </table>
   </div>
 
-  <h2>トイレ行く行かないルーレット</h2>
-  <button onclick="startToiletRoulette()">トイレに行く？</button>
-  <div id="toiletResult" class="menu-display">？？？？？？？？？？</div>
-
   <script>
     const foods = [
-      { name:'ミラノ風ドリア', code:'2101', price:300 }, { name:'小エビのサラダ', code:'1202', price:350 },
-      { name:'辛味チキン', code:'1401', price:300 }, { name:'バッファローモッツァレラのマルゲリータピザ', code:'2203', price:400 },
-      { name:'若鶏のディアボラ風', code:'2402', price:500 }, { name:'たまねぎのズッパ', code:'1307', price:300 },
-      { name:'タラコソースシシリー風', code:'2304', price:400 }, { name:'ハンバーグステーキ', code:'2401', price:500 },
-      { name:'イタリアンプリン', code:'2602', price:300 }, { name:'エスカルゴのオーブン焼き', code:'1405', price:400 },
-      { name:'イカの墨入りセピアソース', code:'2328', price:500 }, { name:'ティラミス クラシコ', code:'2601', price:300 },
-      { name:'ペペロンチーノ', code:'2301', price:300 }, { name:'カルボナーラ', code:'2302', price:400 },
-      { name:'エビクリームグラタン', code:'2205', price:400 }, { name:'マルゲリータピザ', code:'2201', price:400 },
-      { name:'ソーセージピザ', code:'2202', price:400 }, { name:'野菜ときのこのピザ', code:'2204', price:400 },
-      { name:'チョリソー', code:'1403', price:300 }, { name:'ムール貝のガーリック焼き', code:'1404', price:400 },
-      { name:'プチフォッカ', code:'RP06', price:150 }, { name:'シナモンプチフォッカ', code:'RP04', price:200 },
-      { name:'コーンクリームスープ', code:'SU01', price:150 }, { name:'冷たいパンプキンスープ', code:'SU03', price:150 }
+      { name:'ミラノ風ドリア', code:'2101', price:300 },
+      { name:'小エビのサラダ', code:'1202', price:350 },
+      { name:'辛味チキン', code:'1401', price:300 },
+      { name:'バッファローモッツァレラのマルゲリータピザ', code:'2203', price:400 },
+      { name:'若鶏のディアボラ風', code:'2402', price:500 },
+      { name:'たまねぎのズッパ', code:'1307', price:300 },
+      { name:'タラコソースシシリー風', code:'2304', price:400 },
+      { name:'ハンバーグステーキ', code:'2401', price:500 },
+      { name:'イタリアンプリン', code:'2602', price:300 },
+      { name:'エスカルゴのオーブン焼き', code:'1405', price:400 },
+      { name:'イカの墨入りセピアソース', code:'2328', price:500 },
+      { name:'ティラミス クラシコ', code:'2601', price:300 },
+      { name:'ペペロンチーノ', code:'2301', price:300 },
+      { name:'カルボナーラ', code:'2302', price:400 },
+      { name:'エビクリームグラタン', code:'2205', price:400 },
+      { name:'マルゲリータピザ', code:'2201', price:400 },
+      { name:'ソーセージピザ', code:'2202', price:400 },
+      { name:'野菜ときのこのピザ', code:'2204', price:400 },
+      { name:'チョリソー', code:'1403', price:300 },
+      { name:'ムール貝のガーリック焼き', code:'1404', price:400 },
+      { name:'プチフォッカ', code:'RP06', price:150 },
+      { name:'シナモンプチフォッカ', code:'RP04', price:200 },
+      { name:'コーンクリームスープ', code:'SU01', price:150 },
+      { name:'冷たいパンプキンスープ', code:'SU03', price:150 }
     ];
 
     const drinks = [
-      { name:'コーヒー', code:'D01' }, { name:'カプチーノ', code:'D02' }, { name:'エスプレッソ', code:'D03' },
-      { name:'アメリカン', code:'D04' }, { name:'アイスコーヒー', code:'D05' }, { name:'アイスカプチーノ', code:'D06' },
+      { name:'コーヒー', code:'D01' }, { name:'カプチーノ', code:'D02' },
+      { name:'エスプレッソ', code:'D03' }, { name:'アメリカン', code:'D04' },
+      { name:'アイスコーヒー', code:'D05' }, { name:'アイスカプチーノ', code:'D06' },
       { name:'紅茶（ダージリン）', code:'D07' }, { name:'紅茶（アールグレイ）', code:'D08' },
       { name:'紅茶（アップルティー）', code:'D09' }, { name:'紅茶（ホワイトワイン＆ラ・フランスティー）', code:'D10' },
-      { name:'ジャスミン茶', code:'D11' }, { name:'煎茶', code:'D12' }, { name:'アップル果汁100％', code:'D13' },
-      { name:'野菜と果実の健康レシピ（野菜・果実100％）', code:'D14' }, { name:'コカ・コーラ', code:'D15' },
-      { name:'ぶどうブレンド/スカッシュ', code:'D16' }, { name:'すっきり白ぶどう/スカッシュ', code:'D17' },
-      { name:'メロンソーダ', code:'D18' }, { name:'ジンジャエール', code:'D19' }, { name:'オレンジ/スカッシュ', code:'D20' },
+      { name:'ジャスミン茶', code:'D11' }, { name:'煎茶', code:'D12' },
+      { name:'アップル果汁100％', code:'D13' }, { name:'野菜と果実の健康レシピ（野菜・果実100％）', code:'D14' },
+      { name:'コカ・コーラ', code:'D15' }, { name:'ぶどうブレンド/スカッシュ', code:'D16' },
+      { name:'すっきり白ぶどう/スカッシュ', code:'D17' }, { name:'メロンソーダ', code:'D18' },
+      { name:'ジンジャエール', code:'D19' }, { name:'オレンジ/スカッシュ', code:'D20' },
       { name:'烏龍茶', code:'D21' }, { name:'紅茶花伝アイスティー', code:'D22' }
     ];
 
+    const foodCheckStates = {};
+    const drinkCheckStates = {};
+
+    function populateTables() {
+      const foodBody = document.getElementById('foodBody');
+      const drinkBody = document.getElementById('drinkBody');
+
+      foods.forEach((item, i) => {
+        foodCheckStates[i] = true;
+        const row = `
+          <tr>
+            <td class="checkbox-cell"><input type="checkbox" class="custom-checkbox" checked onchange="foodCheckStates[${i}] = this.checked" /></td>
+            <td>${item.name}</td>
+            <td>${item.code}</td>
+            <td>￥${item.price}</td>
+          </tr>`;
+        foodBody.insertAdjacentHTML('beforeend', row);
+      });
+
+      drinks.forEach((item, i) => {
+        drinkCheckStates[i] = true;
+        const row = `
+          <tr>
+            <td class="checkbox-cell"><input type="checkbox" class="custom-checkbox" checked onchange="drinkCheckStates[${i}] = this.checked" /></td>
+            <td>${item.name}</td>
+            <td>${item.code}</td>
+          </tr>`;
+        drinkBody.insertAdjacentHTML('beforeend', row);
+      });
+    }
+
     function startRoulette(items, isFood = true) {
+      const checkStates = isFood ? foodCheckStates : drinkCheckStates;
+      const validItems = items.filter((_, i) => checkStates[i]);
+      if (validItems.length === 0) return alert('選択されたメニューがありません');
+
       const display = document.getElementById('rouletteResult');
       display.classList.remove('enlarged');
       let count = 0;
       const interval = setInterval(() => {
-        const item = items[Math.floor(Math.random() * items.length)];
+        const item = validItems[Math.floor(Math.random() * validItems.length)];
         display.innerHTML = isFood
           ? `<div>${item.name}</div><div class="subtext">${item.code} ￥${item.price}</div>`
           : `<div>${item.name}</div><div class="subtext">${item.code}</div>`;
@@ -163,35 +236,8 @@
     const startFoodRoulette  = () => startRoulette(foods, true);
     const startDrinkRoulette = () => startRoulette(drinks, false);
 
-    function populateTables() {
-      const foodTable  = document.getElementById('foodTable');
-      const drinkTable = document.getElementById('drinkTable');
-      foods.forEach(item => {
-        foodTable.insertAdjacentHTML('beforeend',
-          `<tr><td>${item.name}</td><td>${item.code}</td><td>￥${item.price}</td></tr>`);
-      });
-      drinks.forEach(item => {
-        drinkTable.insertAdjacentHTML('beforeend',
-          `<tr><td>${item.name}</td><td>${item.code}</td></tr>`);
-      });
-    }
-
-    function startToiletRoulette() {
-      const options = ['行く', '行かない'];
-      const display = document.getElementById('toiletResult');
-      display.classList.remove('enlarged');
-      let count = 0;
-      const interval = setInterval(() => {
-        const result = options[Math.floor(Math.random() * options.length)];
-        display.innerHTML = `<div>${result}</div>`;
-        if (++count > 40) {
-          clearInterval(interval);
-          setTimeout(() => display.classList.add('enlarged'), 100);
-        }
-      }, 50);
-    }
-
     window.onload = populateTables;
   </script>
+  左側のチェックボックスでオンオフが出来ます。
 </body>
 </html>
