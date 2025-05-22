@@ -99,6 +99,58 @@
       cursor: pointer;
     }
 
+    .add-form {
+  margin: 30px auto 20px auto; /* 上下の余白縮小 */
+  text-align: left;
+  background-color: #ffffff;
+  color: #000;
+  padding: 16px 20px;
+  border-radius: 12px;
+  max-width: 500px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* カード風に */
+}
+
+.add-form h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.add-form label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.add-form input[type="text"],
+.add-form input[type="number"],
+.add-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.add-form button {
+  background-color: #31a046;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.add-form button:hover {
+  background-color: #278a3b;
+}
+
+
     @media (max-width: 600px) {
       h1 { font-size: 20px; }
       h2 { font-size: 18px; }
@@ -138,6 +190,28 @@
       </thead>
       <tbody id="drinkBody"></tbody>
     </table>
+  </div>
+
+  <div class="add-form">
+    <h2>メニューを追加</h2>
+    <form onsubmit="return addCustomMenu()">
+      <label for="menuType">メニューの種類</label>
+      <select id="menuType">
+        <option value="food">フード</option>
+        <option value="drink">ドリンク</option>
+      </select>
+
+      <label for="menuName">メニュー名</label>
+      <input type="text" id="menuName" />
+
+      <label for="menuCode">注文番号</label>
+      <input type="text" id="menuCode" />
+
+      <label for="menuPrice">価格（任意）</label>
+      <input type="number" id="menuPrice" />
+
+      <button type="submit">追加</button>
+    </form>
   </div>
 
   <script>
@@ -188,28 +262,28 @@
     function populateTables() {
       const foodBody = document.getElementById('foodBody');
       const drinkBody = document.getElementById('drinkBody');
+      foodBody.innerHTML = '';
+      drinkBody.innerHTML = '';
 
       foods.forEach((item, i) => {
         foodCheckStates[i] = true;
-        const row = `
+        foodBody.insertAdjacentHTML('beforeend', `
           <tr>
             <td class="checkbox-cell"><input type="checkbox" class="custom-checkbox" checked onchange="foodCheckStates[${i}] = this.checked" /></td>
             <td>${item.name}</td>
             <td>${item.code}</td>
-            <td>￥${item.price}</td>
-          </tr>`;
-        foodBody.insertAdjacentHTML('beforeend', row);
+            <td>￥${item.price ?? '-'}</td>
+          </tr>`);
       });
 
       drinks.forEach((item, i) => {
         drinkCheckStates[i] = true;
-        const row = `
+        drinkBody.insertAdjacentHTML('beforeend', `
           <tr>
             <td class="checkbox-cell"><input type="checkbox" class="custom-checkbox" checked onchange="drinkCheckStates[${i}] = this.checked" /></td>
             <td>${item.name}</td>
             <td>${item.code}</td>
-          </tr>`;
-        drinkBody.insertAdjacentHTML('beforeend', row);
+          </tr>`);
       });
     }
 
@@ -224,7 +298,7 @@
       const interval = setInterval(() => {
         const item = validItems[Math.floor(Math.random() * validItems.length)];
         display.innerHTML = isFood
-          ? `<div>${item.name}</div><div class="subtext">${item.code} ￥${item.price}</div>`
+          ? `<div>${item.name}</div><div class="subtext">${item.code} ￥${item.price ?? '-'}</div>`
           : `<div>${item.name}</div><div class="subtext">${item.code}</div>`;
         if (++count > 40) {
           clearInterval(interval);
@@ -236,8 +310,28 @@
     const startFoodRoulette  = () => startRoulette(foods, true);
     const startDrinkRoulette = () => startRoulette(drinks, false);
 
+    function addCustomMenu() {
+      const type = document.getElementById('menuType').value;
+      const name = document.getElementById('menuName').value.trim();
+      const code = document.getElementById('menuCode').value.trim();
+      const price = parseInt(document.getElementById('menuPrice').value);
+
+      if (!name && !code && isNaN(price)) return false;
+
+      if (type === 'food') {
+        const item = { name: name || '（名称未定）', code: code || '---', price: isNaN(price) ? '-' : price };
+        foods.push(item);
+      } else {
+        const item = { name: name || '（名称未定）', code: code || '---' };
+        drinks.push(item);
+      }
+
+      populateTables();
+      document.querySelector('.add-form form').reset();
+      return false;
+    }
+
     window.onload = populateTables;
   </script>
-  左側のチェックボックスでオンオフが出来ます。
 </body>
 </html>
