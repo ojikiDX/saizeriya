@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>サイゼリヤメニュールーレット</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@800&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: 'Kaisei Tokumin', serif;
       text-align: center;
       padding: 50px;
+      background-color: #31a046;
+      color: #ffffff;
     }
     .menu-display {
       font-size: 24px;
@@ -17,20 +20,23 @@
     }
     .enlarged {
       transform: scale(1.5);
-      color: #e74c3c;
+      color: #ffffff;
     }
     button {
+      font-family: 'Kaisei Tokumin', serif;
       font-size: 20px;
       padding: 10px 20px;
       margin: 10px;
       cursor: pointer;
+      background-color: #c6221f;
+      color: #ffffff;
     }
   </style>
 </head>
 <body>
-  <h1>🎯 サイゼリヤメニュールーレット</h1>
-  <button onclick="startFoodRoulette()">フードを選ぶ</button>
-  <button onclick="startDrinkRoulette()">ドリンクを選ぶ</button>
+  <h1>サイゼリヤメニュールーレット</h1>
+  <button onclick="startFoodRoulette()">FOOD</button>
+  <button onclick="startDrinkRoulette()">DRINK</button>
   <div id="foodMenu" class="menu-display">ここにフードメニューが表示されます</div>
   <div id="drinkMenu" class="menu-display">ここにドリンクメニューが表示されます</div>
 
@@ -95,7 +101,7 @@
       const interval = setInterval(() => {
         const randomIndex = Math.floor(Math.random() * items.length);
         const item = items[randomIndex];
-        display.textContent = `${item.name} ${item.code} ${item.price}円`;
+        display.textContent = `${item.name} ${item.code} ￥${item.price}`;
         count++;
         if (count > 20) {
           clearInterval(interval);
