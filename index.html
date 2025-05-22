@@ -28,9 +28,8 @@
     }
     .menu-display {
       font-size: 20px;
-      margin-top: 20px;
+      margin-top: 10px;
       transition: transform 0.5s ease;
-      /* 2行表示の調整 */
       line-height: 1.2;
     }
     .menu-display .subtext {
@@ -88,12 +87,16 @@
   <h2>ドリンクメニュー</h2>
   <div class="table-wrapper">
     <table id="drinkTable">
-      <tr><th>メニュー名</th><th>注文番号</th></tr><!-- 価格列を削除 -->
+      <tr><th>メニュー名</th><th>注文番号</th></tr>
     </table>
   </div>
 
+  <!-- トイレルーレット -->
+  <h2>トイレ行く行かないルーレット</h2>
+  <button onclick="startToiletRoulette()">トイレに行く？</button>
+  <div id="toiletResult" class="menu-display">？？？？？？？？？？</div>
+
   <script>
-    /* ---------- データ ---------- */
     const foods = [
       { name:'ミラノ風ドリア', code:'2101', price:300 }, { name:'小エビのサラダ', code:'1202', price:350 },
       { name:'辛味チキン', code:'1401', price:300 }, { name:'バッファローモッツァレラのマルゲリータピザ', code:'2203', price:400 },
@@ -120,7 +123,6 @@
       { name:'烏龍茶', code:'D21' }, { name:'紅茶花伝アイスティー', code:'D22' }
     ];
 
-    /* ---------- ルーレット ---------- */
     function startRoulette(items, displayId) {
       const display = document.getElementById(displayId);
       display.classList.remove('enlarged');
@@ -140,7 +142,6 @@
     const startFoodRoulette  = () => startRoulette(foods,  'foodMenu');
     const startDrinkRoulette = () => startRoulette(drinks, 'drinkMenu');
 
-    /* ---------- テーブル生成 ---------- */
     function populateTables() {
       const foodTable  = document.getElementById('foodTable');
       const drinkTable = document.getElementById('drinkTable');
@@ -153,6 +154,22 @@
           `<tr><td>${item.name}</td><td>${item.code}</td></tr>`);
       });
     }
+
+    function startToiletRoulette() {
+      const options = ['行く', '行かない'];
+      const display = document.getElementById('toiletResult');
+      display.classList.remove('enlarged');
+      let count = 0;
+      const interval = setInterval(() => {
+        const result = options[Math.floor(Math.random() * options.length)];
+        display.innerHTML = `<div>${result}</div>`;
+        if (++count > 40) {
+          clearInterval(interval);
+          setTimeout(() => display.classList.add('enlarged'), 100);
+        }
+      }, 50);
+    }
+
     window.onload = populateTables;
   </script>
 </body>
