@@ -196,7 +196,7 @@
 <body>
   <div id="top"></div>
   <img src="img/saizeriya.webp" alt="サイゼリヤ" class="top-image" />
-  <h1>サイゼリヤルーレット</h1>
+  <h1>サイゼ１万企画ルーレット</h1>
   <button onclick="startFoodRoulette()">フード</button>
   <button onclick="startDrinkRoulette()">ドリンク</button>
   <div id="rouletteResult" class="menu-display">？？？？？？？？？？</div>
@@ -245,7 +245,7 @@
       <button type="submit">追加</button>
     </form>
   </div>
-  <h2>ルーレット履歴</h2>
+  <h2>履歴</h2>
   <div id="history" style="max-width:600px; margin: 0 auto; text-align:left; background:#fff; color:#000; border-radius:8px; padding:10px 20px; overflow-y:auto; max-height: 200px;">
     履歴はまだありません。
   </div>
@@ -254,85 +254,83 @@
   左側の緑のチェックボックスは、オンオフでルーレットに入れるか入れないかを選択できます。<br>
   メニューを追加は、万が一配信上で「このメニュールーレットに入ってないな」などがあったら使って下さい。<br>
   あと、ページを更新するとチェックボックス、追加したメニュー、履歴はリセットされます。<br>
-  メニューは大体合ってると思います。<br>
-  注文番号までは対応しきれてません。<br>
-  寝ます。<br>
+  注文番号は違う可能性ありますがメニューは大体合ってると思います。<br>
   </div>
   <script>
     const foods = [
-       { name:'ほうれん草のソテー', code:'0000', price:200 },
-{ name:'キャロットラペ', code:'0000', price:200 },
-{ name:'柔らか青豆の温サラダ', code:'0000', price:200 },
-{ name:'スイートコーン', code:'0000', price:200 },
+       { name:'ほうれん草のソテー', code:'1403', price:200 },
+{ name:'キャロットラペ', code:'1413', price:200 },
+{ name:'柔らか青豆の温サラダ', code:'1425', price:200 },
+{ name:'スイートコーン', code:'1435', price:200 },
 { name:'エスカルゴのオーブン焼き', code:'1405', price:400 },
-{ name:'フォッカチオ', code:'0000', price:150 },
-{ name:'アロスティチーニ', code:'0000', price:400 },
-{ name:'アロスティチーニ Wサイズ', code:'0000', price:800 },
-{ name:'ムール貝のガーリック焼き', code:'1404', price:400 },
+{ name:'アロスティチーニ', code:'1402', price:400 },
+{ name:'アロスティチーニ Wサイズ', code:'1452', price:800 },
+{ name:'ムール貝のガーリック焼き', code:'1410', price:400 },
 { name:'辛味チキン', code:'1401', price:300 },
-{ name:'チョリソー', code:'1403', price:400 },
-{ name:'ポップコーンシュリンプ', code:'0000', price:300 },
-{ name:'ポテトのグリル', code:'0000', price:300 },
-{ name:'生ハムとバッファローモッツァレラの盛合せ', code:'0000', price:500 },
-{ name:'ハモン・セラーノ', code:'0000', price:320 },
-{ name:'バッファローモッツァレラのカプレーゼ', code:'0000', price:430 },
-{ name:'蒸し鶏の香味ソース', code:'0000', price:280 },
-{ name:'小エビのカクテル', code:'0000', price:280 },
+{ name:'チョリソー', code:'1407', price:400 },
+{ name:'ポップコーンシュリンプ', code:'1404', price:300 },
+{ name:'ポテトのグリル', code:'1416', price:300 },
+{ name:'生ハムとバッファローモッツァレラの盛合せ', code:'1423', price:500 },
+{ name:'ハモン・セラーノ', code:'1422', price:320 },
+{ name:'バッファローモッツァレラのカプレーゼ', code:'1417', price:430 },
+{ name:'蒸し鶏の香味ソース', code:'1408', price:280 },
+{ name:'小エビのカクテル', code:'1406', price:280 },
 { name:'小エビのサラダ', code:'1202', price:350 },
-{ name:'チキンのサラダ', code:'0000', price:350 },
-{ name:'わかめのサラダ', code:'0000', price:350 },
+{ name:'チキンのサラダ', code:'1209', price:350 },
+{ name:'わかめのサラダ', code:'1205', price:350 },
 { name:'たまねぎのズッパ', code:'1307', price:300 },
-{ name:'コーンクリームスープ', code:'SU01', price:150 },
-{ name:'田舎風ミネストローネ', code:'0000', price:300 },
-{ name:'ガーリックフォッカチオ', code:'0000', price:200 },
-{ name:'シナモンフォッカチオ', code:'RP04', price:200 },
+{ name:'コーンクリームスープ', code:'1301', price:150 },
+{ name:'田舎風ミネストローネ', code:'1305', price:300 },
+{ name:'フォッカチオ', code:'3110', price:150 },
+{ name:'ガーリックフォッカチオ', code:'3111', price:200 },
+{ name:'シナモンフォッカチオ', code:'3112', price:200 },
+{ name:'チーズフォッカチオ', code:'3114', price:200 },
 { name:'バッファローモッツァレラのマルゲリータピザ', code:'2203', price:400 },
-{ name:'ソーセージピザ', code:'2202', price:400 },
-{ name:'たっぷりコーンのピザ', code:'0000', price:400 },
+{ name:'ソーセージピザ', code:'2208', price:400 },
+{ name:'たっぷりコーンのピザ', code:'2206', price:400 },
 { name:'野菜ときのこのピザ', code:'2204', price:400 },
 { name:'ミラノ風ドリア', code:'2101', price:300 },
-{ name:'半熟卵のミラノ風ドリア', code:'0000', price:350 },
-{ name:'焼きチーズミラノ風ドリア', code:'0000', price:350 },
-{ name:'タラコとポップコーンシュリンプのドリア', code:'0000', price:400 },
-{ name:'ポップコーンシュリンプとタラコのクリームグラタン（全粒粉）', code:'2205', price:430 },
-{ name:'タラコソースシシリー風', code:'2304', price:400 },
-{ name:'小エビのタラコソース', code:'0000', price:540 },
-{ name:'カルボナーラ', code:'2302', price:500 },
-{ name:'パルマ風スパゲッティ', code:'0000', price:400 },
-{ name:'きのことほうれん草のクリームスパゲッティ', code:'0000', price:600 },
+{ name:'半熟卵のミラノ風ドリア', code:'2103', price:350 },
+{ name:'焼きチーズミラノ風ドリア', code:'2108', price:350 },
+{ name:'タラコとポップコーンシュリンプのドリア', code:'2110', price:400 },
+{ name:'ポップコーンシュリンプとタラコのクリームグラタン（全粒粉）', code:'2115', price:430 },
+{ name:'タラコソースシシリー風', code:'2301', price:400 },
+{ name:'小エビのタラコソース', code:'2320', price:540 },
+{ name:'カルボナーラ', code:'2305', price:500 },
+{ name:'パルマ風スパゲッティ', code:'2304', price:400 },
+{ name:'きのことほうれん草のクリームスパゲッティ', code:'2321', price:600 },
 { name:'イカの墨入りセピアソース', code:'2328', price:500 },
-{ name:'ミートソースボロニア風', code:'0000', price:400 },
-{ name:'半熟卵のミートソース ボロニア風', code:'0000', price:450 },
-{ name:'スープ入り塩味ボンゴレ', code:'0000', price:500 },
-{ name:'ペペロンチーノ', code:'2301', price:300 },
-{ name:'半熟卵のペペロンチーノ', code:'0000', price:350 },
-{ name:'ペンネアラビアータ（全粒粉）', code:'0000', price:430 },
-{ name:'トッピング粉チーズ（グランモラビア）', code:'0000', price:100 },
-{ name:'トッピング半熟卵', code:'0000', price:50 },
-{ name:'ミックスグリル', code:'0000', price:650 },
-{ name:'ディアボラ風ハンバーグ', code:'0000', price:500 },
-{ name:'イタリアンハンバーグ', code:'0000', price:500 },
-{ name:'ハンバーグステーキ', code:'2401', price:500 },
+{ name:'ミートソースボロニア風', code:'2306', price:400 },
+{ name:'半熟卵のミートソース ボロニア風', code:'2316', price:450 },
+{ name:'スープ入り塩味ボンゴレ', code:'2310', price:500 },
+{ name:'ペペロンチーノ', code:'2303', price:300 },
+{ name:'半熟卵のペペロンチーノ', code:'2317', price:350 },
+{ name:'ペンネアラビアータ（全粒粉）', code:'2325', price:430 },
+{ name:'トッピング粉チーズ（グランモラビア）', code:'4307', price:100 },
+{ name:'トッピング半熟卵', code:'4301', price:50 },
+{ name:'ミックスグリル', code:'2418', price:650 },
+{ name:'ディアボラ風ハンバーグ', code:'2407', price:500 },
+{ name:'イタリアンハンバーグ', code:'2403', price:500 },
+{ name:'ハンバーグステーキ', code:'2406', price:400 },
 { name:'若鶏のディアボラ風', code:'2402', price:500 },
-{ name:'ラム（仔羊）と野菜のグリル', code:'0000', price:870 },
-{ name:'柔らかチキンのチーズ焼き', code:'0000', price:500 },
-{ name:'トッピング野菜ソース', code:'0000', price:100 },
-{ name:'ライス', code:'0000', price:150 },
-{ name:'ラージライス', code:'0000', price:200 },
-{ name:'スモールライス', code:'0000', price:100 },
-{ name:'イタリアンプリン', code:'2602', price:250 },
-{ name:'ティラミスクラシコ', code:'2601', price:300 },
-{ name:'プリンとティラミスクラシコの盛合せ', code:'0000', price:500 },
-{ name:'ミルクジェラート', code:'0000', price:250 },
-{ name:'トリフアイスクリーム', code:'0000', price:350 },
-{ name:'チョコレートケーキ', code:'0000', price:300 },
-{ name:'コーヒーゼリー＆ミルクジェラート', code:'0000', price:350 },
-{ name:'ジェラート＆シナモンフォッカチオ', code:'0000', price:450 }
+{ name:'ラム（仔羊）と野菜のグリル', code:'2413', price:870 },
+{ name:'柔らかチキンのチーズ焼き', code:'2404', price:500 },
+{ name:'トッピング野菜ソース', code:'4304', price:100 },
+{ name:'ライス', code:'3101', price:150 },
+{ name:'ラージライス', code:'3102', price:200 },
+{ name:'スモールライス', code:'3103', price:100 },
+{ name:'イタリアンプリン', code:'3206', price:250 },
+{ name:'ティラミスクラシコ', code:'3201', price:300 },
+{ name:'プリンとティラミスクラシコの盛合せ', code:'3212', price:500 },
+{ name:'ミルクジェラート', code:'3205', price:250 },
+{ name:'トリフアイスクリーム', code:'3213', price:350 },
+{ name:'チョコレートケーキ', code:'3207', price:300 },
+{ name:'コーヒーゼリー＆ミルクジェラート', code:'3215', price:350 },
+{ name:'ジェラート＆シナモンフォッカチオ', code:'3214', price:450 }
     ];
 
     const drinks = [
-      { name:'コーヒー', code:'D01' }, { name:'アイスコーヒー', code:'D01' },
-      { name:'カプチーノ', code:'D02' }, { name:'アイスカプチーノ', code:'D02' },
+      { name:'コーヒー', code:'D01' }, { name:'カプチーノ', code:'D02' },
       { name:'エスプレッソ', code:'D03' }, { name:'アメリカン', code:'D04' },
       { name:'アイスコーヒー', code:'D05' }, { name:'アイスカプチーノ', code:'D06' },
       { name:'紅茶（ダージリン）', code:'D07' }, { name:'紅茶（アールグレイ）', code:'D08' },
