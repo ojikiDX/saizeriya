@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>オジゼリヤ</title>
+  <title>サイゼリヤメニュールーレット</title>
   <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@800&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -49,8 +49,6 @@
       transition: transform 0.5s ease;
       line-height: 1.2;
       word-break: break-word;
-      display: flex;
-      flex-wrap: wrap;
     }
 
     .menu-display .subtext {
@@ -172,6 +170,10 @@
       button { font-size: 14px; padding: 8px 16px; }
       table { font-size: 14px; }
     }
+
+  .helptext {
+  color: #ffffff
+  }
   </style>
 </head>
 <body>
@@ -234,11 +236,11 @@
   左側の緑のチェックボックスは、オンオフでルーレットに入れるか入れないかを選択できます。<br>
   メニューを追加は、万が一配信上で「このメニュールーレットに入ってないな」などがあったら使って下さい。<br>
   あと、ページを更新するとチェックボックス、追加したメニュー、履歴はリセットされます。<br>
-  メニューは確認中。<br>
+  メニューは確認中<br>
   </div>
   <script>
     const foods = [
-      { name:'ほうれん草のソテー', code:'0000', price:200 },
+       { name:'ほうれん草のソテー', code:'0000', price:200 },
 { name:'キャロットラペ', code:'0000', price:200 },
 { name:'柔らか青豆の温サラダ', code:'0000', price:200 },
 { name:'スイートコーン', code:'0000', price:200 },
@@ -306,7 +308,6 @@
 { name:'チョコレートケーキ', code:'0000', price:300 },
 { name:'コーヒーゼリー＆ミルクジェラート', code:'0000', price:350 },
 { name:'ジェラート＆シナモンフォッカチオ', code:'0000', price:450 }
-
     ];
 
     const drinks = [
