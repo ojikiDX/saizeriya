@@ -174,9 +174,31 @@
   .helptext {
   color: #ffffff
   }
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #c6221f;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  z-index: 1000;
+  transition: background-color 0.3s, color 0.3s;
+}
+.back-to-top:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #31a046;
+}
   </style>
 </head>
 <body>
+  <div id="top"></div>
   <img src="img/saizeriya.webp" alt="サイゼリヤ" class="top-image" />
   <h1>サイゼリヤルーレット</h1>
   <button onclick="startFoodRoulette()">フード</button>
@@ -236,9 +258,10 @@
   左側の緑のチェックボックスは、オンオフでルーレットに入れるか入れないかを選択できます。<br>
   メニューを追加は、万が一配信上で「このメニュールーレットに入ってないな」などがあったら使って下さい。<br>
   あと、ページを更新するとチェックボックス、追加したメニュー、履歴はリセットされます。<br>
-  メニューは大体あってると思います。<br>
+  メニューは大体合ってると思います。<br>
   注文番号までは対応しきれてません。<br>
   寝ます。<br>
+  </div>
   <script>
     const foods = [
        { name:'ほうれん草のソテー', code:'0000', price:200 },
@@ -451,5 +474,6 @@ function startRoulette(items, isFood = true) {
 
     window.onload = populateTables;
   </script>
+  <a href="#top" class="back-to-top" title="トップに戻る">▲</a>
 </body>
 </html>
